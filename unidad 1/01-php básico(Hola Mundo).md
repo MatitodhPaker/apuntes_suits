@@ -353,5 +353,254 @@ ES UNA OPERACION QUE NOS PERMITE CICLAR MIENTRAS LA CONDICION SE CUMPA
 ```
 
 ## for each
-
  
+ Nos ayuda a recorrer un arreglo de manera mas sencilla otorgando el resultado.
+ ``
+ 
+```php
+<?php
+
+    $persona=[
+
+        "nombre"=>"fernando",
+
+        "edad"=>29,
+
+        "direccion"=>[
+
+            "ciudad"=>"CDMX",
+
+            "alcaldia"=>"Milpa Alta",
+
+            "pueblo"=>"San Juan"
+
+        ],
+
+        "calificaciones"=>[1,2,3,4,5,6]
+
+    ];
+
+    $calificaciones=[100,99,89,78,67,78];
+
+    $arreglo=["hola mundo",24,true];
+
+    /* foreach($calificaciones as $calificacion){
+
+        print($calificacion);
+
+        echo"<br>";
+
+    }
+
+    foreach($calificaciones as $calificacion):
+
+        print($calificacion);
+
+        echo"<br>";
+
+    endforeach; */
+
+    foreach($persona as $llave => $valor){
+
+        /* print("llave".$llave."valor".$valor);
+
+        echo"<br>"; */
+
+        if (gettype($valor)=='array') {
+
+            print_r($valor);
+
+        }else {
+
+            print("llave".$llave."valor".$valor);        
+
+        }
+
+        print(gettype($valor));
+
+        echo "<br>";
+
+    }
+
+?>
+```
+
+## Funciones
+
+Para hacer una funcion usamos la palabra funtion
+```ad-note
+ Las funciones solo deben ejecutar una tarea especifica 
+```
+
+```php
+	<?php
+
+    function saludar($nombre,$apellido){
+
+        return "hola".$nombre." ".$apellido;
+
+    }
+
+    print(saludar("parker","perez"));
+
+?>
+```
+  
+## clases
+ son clase de la cuales puden tener atributos y funciones de las cuale spodemos instarncar diversas cosas
+ ```php
+ <?php
+
+    class Persona{
+
+        public function __construct(public $nombre, public $apellido, public $edad){}
+
+    }
+
+    class Alumno{
+
+        public $nombre;
+
+        public $matricula;
+
+        public $apellido;
+
+        public $edad;
+
+        public function __construct($matricula,$nombre,$edad,$apellido)
+
+        {
+
+            $this->$matricula=$matricula;
+
+            $this->$nombre=$nombre;
+
+            $this->$apellido=$apellido;
+
+            $this->$edad=$edad;
+
+        }
+
+        function reprobaste ($materia,$calificacion) {
+
+            return "Reprobaste ".$materia." con ".$calificacion;
+
+        }
+
+    }
+
+    $nombre = new Persona("parker","perez",25);
+
+    $alumno= new Alumno('181190076','parker',25,'perez');
+
+    echo "<pre>";
+
+        print_r($nombre);
+
+        print_r($alumno);
+
+        echo "<br>";
+
+        print($alumno->reprobaste('poo',65));
+
+    echo "</pre>";
+
+?>
+```
+
+## Encapsulacion
+
+Para encapsular los datos se utilizan las palabras resevadas de private o protected
+
+```php
+<?php
+
+    class Producto{
+
+        public function __construct(protected $nombre,private $precio,protected $caducidad){}
+
+        public function obtenerProducto($nombre){
+
+            if ($nombre === $this->nombre) {
+
+                return 'Producto: '. $this->nombre .' precio: '. $this->precio .' caducidad '. $this->caducidad;
+
+            }else{
+
+                return 'El producto no existe';
+
+            }
+
+        }
+
+        /* static public function obtenerProducto(){
+
+            return "Accedimos al metodo estatico";
+
+        } */
+
+    }
+
+    $galletas=new Producto('pincipe',20,'29/09/23');
+
+    echo '<pre>';
+
+        print_r($galletas->obtenerProducto('hola'));
+
+        /* print_r(Producto::obtenerProducto()); */
+
+    echo '</pre>';
+
+?>
+```
+
+## funciones o atributos estaticos
+
+```ad-note
+	Para acceder a los metodos o atribotos estaticos dentro de la clase se usa self
+```
+
+Para acceder de manera estatica de una clase solo debes dar el nombre de clase y dos puntos 
+
+```php
+	<?php
+
+  
+  
+
+    class Persona{
+
+        public static $edad;
+
+        protected static $nombre;
+
+        protected static $apellido;
+
+        public function __construct($edad,$apellido,$nombre){
+
+            self::$edad=$edad;
+
+            self::$apellido=$apellido;
+
+            self::$nombre=$nombre;
+
+        }
+
+        public static function obtenerPersona(){
+
+            return 'Nombre: '.self::$nombre.' Apellido '.self::$apellido.' edad '. self::$edad;
+
+        }
+
+    }
+
+    $persona=new Persona(25,"Perez","Parker");
+
+    print(Persona::obtenerPersona())
+
+?>
+```
+
+```ad-note
+	 para iniciar los datos primero debemos instanciar  las clases para de esa manera tener datos ya con valores 
+```
